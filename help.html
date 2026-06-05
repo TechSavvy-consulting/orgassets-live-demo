@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OrgAssets Help</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      body {
+        background: #f4f6f3;
+      }
+
+      .help-layout {
+        width: min(1220px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 24px 0 52px;
+      }
+
+      .help-hero {
+        padding: 28px;
+        background: #1f2b27;
+        color: #fff;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .brand-row {
+        display: grid;
+        grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+      }
+
+      .brand-row img {
+        width: 100%;
+        padding: 8px;
+        background: #fff;
+        border-radius: 8px;
+      }
+
+      .help-hero h1 {
+        margin: 0 0 8px;
+        font-size: 34px;
+      }
+
+      .help-hero p {
+        max-width: 920px;
+        margin: 0;
+        color: #d8e0e5;
+        line-height: 1.55;
+      }
+
+      .help-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .help-nav a,
+      .back-top-floating {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 0 12px;
+        color: var(--text);
+        text-decoration: none;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+      }
+
+      .help-nav a:hover,
+      .back-top-floating:hover {
+        border-color: var(--accent);
+        box-shadow: 0 8px 18px rgba(23, 32, 39, 0.08);
+      }
+
+      .help-nav a.primary {
+        background: #e0a84f;
+        border-color: #e0a84f;
+        color: #1f2b27;
+        font-weight: 800;
+      }
+
+      .help-nav {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        padding: 12px 0;
+        background: #f4f6f3;
+      }
+
+      .help-card {
+        margin-top: 18px;
+        padding: 22px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .help-card h2 {
+        margin: 0 0 8px;
+        font-size: 24px;
+      }
+
+      .help-card h3 {
+        margin: 18px 0 8px;
+        font-size: 17px;
+      }
+
+      .help-card p,
+      .help-card li {
+        line-height: 1.55;
+      }
+
+      .help-card ol,
+      .help-card ul {
+        padding-left: 22px;
+      }
+
+      .help-card li {
+        margin: 8px 0;
+      }
+
+      .help-card h3 + p {
+        margin-top: 0;
+      }
+
+      .help-card img {
+        display: block;
+        width: 100%;
+        margin: 16px 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 12px 24px rgba(23, 32, 39, 0.1);
+      }
+
+      .callout {
+        margin-top: 14px;
+        padding: 12px;
+        color: var(--text);
+        background: #eef6f8;
+        border-left: 4px solid var(--accent);
+        border-radius: 6px;
+      }
+
+      .callout p {
+        color: inherit;
+      }
+
+      .callout.warning {
+        background: #fff5e7;
+        border-left-color: var(--warn);
+      }
+
+      .callout.danger {
+        background: #fff0f1;
+        border-left-color: var(--danger);
+      }
+
+      .feature-grid,
+      .workflow-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .mini-card {
+        padding: 14px;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .mini-card strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .back-top-floating {
+        position: fixed;
+        right: max(18px, calc((100vw - 1220px) / 2 + 16px));
+        bottom: 24px;
+        z-index: 20;
+        font-weight: 800;
+        box-shadow: var(--shadow);
+      }
+
+      code {
+        padding: 2px 5px;
+        background: #eef2ee;
+        border-radius: 4px;
+      }
+
+      @media (max-width: 900px) {
+        .brand-row,
+        .feature-grid,
+        .workflow-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .brand-row img {
+          max-width: 220px;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .help-layout {
+          width: min(100vw - 20px, 1220px);
+          padding-top: 12px;
+        }
+
+        .back-top-floating {
+          display: none;
+        }
+
+        .help-hero,
+        .help-card {
+          padding: 16px;
+        }
+
+        .help-hero h1 {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a id="top"></a>
+    <a class="back-top-floating" href="#top">Back to top</a>
+
+    <main class="help-layout">
+      <section class="help-hero">
+        <div class="brand-row">
+          <img src="./assets/brand/techsavvy-logo.png" alt="TechSavvy Consulting" />
+          <div>
+            <p class="eyebrow">OrgAssets Help Center</p>
+            <h1>Know who owns, uses, and has access to every digital asset</h1>
+            <p>
+              OrgAssets connects your employee org chart to systems, assets, vendors, subscriptions, access assignments,
+              cleanup actions, reports, imports, users, backups, and branded PDF exports.
+            </p>
+            <div class="callout warning">
+              Recommended workstation use: 1366 x 768 minimum, with 1440 x 900 or larger preferred for org chart,
+              reporting, import, and settings workflows. Smaller screens can be used for quick review, but dense admin
+              work is best on a larger monitor.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <nav class="help-nav" aria-label="Help sections">
+        <a class="primary" href="./index.html">Back to Portal</a>
+        <a href="#overview">Overview</a>
+        <a href="#sign-in">Sign In</a>
+        <a href="#daily-use">Daily Use</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#people">People</a>
+        <a href="#departments">Departments</a>
+        <a href="#roles">Roles</a>
+        <a href="#vendors">Vendors</a>
+        <a href="#systems">Systems</a>
+        <a href="#assignments">Assignments</a>
+        <a href="#offboarding">Offboarding</a>
+        <a href="#org">Org Chart</a>
+        <a href="#details">Details</a>
+        <a href="#actions">Actions</a>
+        <a href="#reports">Reports</a>
+        <a href="#imports">Imports</a>
+        <a href="#export-locations">Export Locations</a>
+        <a href="#settings">Settings</a>
+        <a href="#users-backup">Users</a>
+        <a href="#security">Security</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+        <a href="#about">About Us</a>
+      </nav>
+
+      <section id="overview" class="help-card">
+        <h2>1. What OrgAssets Does</h2>
+        <p>
+          OrgAssets gives the business one operating view of digital assets, accounts, subscriptions, vendors, owners,
+          users, renewals, spend, admin access, and cleanup work. It helps leadership, bookkeeping, operations, and IT
+          see what the company pays for, who owns it, who uses it, and what needs attention.
+        </p>
+        <div class="feature-grid">
+          <article class="mini-card">
+            <strong>Bookkeeping and Spend Control</strong>
+            <p>Track software, memberships, portals, vendors, payment owners, departments, monthly cost, annual cost, renewals, and cancellation deadlines.</p>
+          </article>
+          <article class="mini-card">
+            <strong>Access and Offboarding Cleanup</strong>
+            <p>Find former staff access, contractor access past end date, admin-level accounts, owner gaps, and systems that still need review.</p>
+          </article>
+          <article class="mini-card">
+            <strong>Renewal and Ownership Accountability</strong>
+            <p>Assign clear owners, reduce unused seats, prevent surprise renewals, and create clean reports for management, bookkeeping, audits, and insurance reviews.</p>
+          </article>
+        </div>
+        <h3>Quick reference order of operations</h3>
+        <ol>
+          <li><b>Start with Dashboard</b> to see the current health of people, assets, renewals, cleanup actions, and reports.</li>
+          <li><b>Set up Departments, Roles, and Vendors</b> before heavy data entry so people, systems/assets, and reports use consistent values.</li>
+          <li><b>Add or review People</b> with the correct department, manager, employment type, status, and role boxes.</li>
+          <li><b>Add Systems / Assets</b> with owner, vendor, department, cost, renewal, seat, URL, and review information.</li>
+          <li><b>Create Assignments</b> to connect people to systems/assets with assignment type, access level, dates, and status.</li>
+          <li><b>Use Offboarding</b> when a person leaves or changes role so every active assignment can be reviewed and revoked from one checklist.</li>
+          <li><b>Organize the Employee Org Chart</b> by confirming managers, using Organize Tree for reporting changes, and choosing card detail options.</li>
+          <li><b>Review Action Center</b> for owner gaps, renewals, stale reviews, unused seats, former staff access, and contractor cleanup.</li>
+          <li><b>Run Reports and export PDFs</b> after filters and multi-column sorting match the review packet you need.</li>
+          <li><b>Use Imports and Settings</b> for admin maintenance, branding, users, defaults, audit trail exports, backups, and bulk data updates.</li>
+        </ol>
+        <div class="callout danger">
+          OrgAssets should never store passwords, API keys, MFA seeds, recovery codes, private keys, or credential notes.
+          Track ownership and access assignments, not secrets.
+        </div>
+      </section>
+
+      <section id="sign-in" class="help-card">
+        <h2>2. Sign In</h2>
+        <img src="./assets/help/21-login-screen.png" alt="OrgAssets login screen with protected app content hidden behind the sign-in dialog" />
+        <ol>
+          <li>Open the OrgAssets portal link provided by your implementation or support team.</li>
+          <li>Sign in with your assigned username and password.</li>
+          <li>Use an admin account for Settings, Imports, Users, report branding, backups, and demo-data controls.</li>
+          <li>Use a standard user account for day-to-day review, directory, systems/assets, assignments, org chart, actions, and reports.</li>
+        </ol>
+        <div class="callout warning">
+          If you cannot sign in or do not see the areas you need, contact your OrgAssets administrator or support team.
+        </div>
+      </section>
+
+      <section id="daily-use" class="help-card">
+        <h2>3. Daily Navigation and Table Controls</h2>
+        <p>
+          Most work starts from the left navigation, Dashboard, global search, View Rules cards, or report links. Admin
+          users can access Settings and Imports. Standard users are limited away from settings, import, and backup areas.
+        </p>
+        <h3>Recommended daily workflow</h3>
+        <ol>
+          <li>Start at Dashboard to review the command queue, focused risk tables, and report deck.</li>
+          <li>Use View Rules to jump into Staff, Contractors, Renewals, or Actions with the right table filters already applied.</li>
+          <li>Open the detail panel from any View button, report value, org chart card, system name, person name, vendor, or owner link.</li>
+          <li>Use the section tables for maintenance work, then run Reports or Export PDF when management needs a clean review packet.</li>
+        </ol>
+        <ul>
+          <li><b>Global Search</b> filters major tables and dashboard views by visible text.</li>
+          <li><b>View Rules</b> jump to Staff, Contractors, Renewals, and Actions. Staff counts exclude contractors.</li>
+          <li><b>Find in list</b> searches inside the current table after global search is applied.</li>
+          <li><b>Column headers</b> sort table data. Reports also support multi-column sort.</li>
+          <li><b>Dropdown filters</b> narrow tables by fields such as department, status, vendor, type, access level, date window, and cost band.</li>
+          <li><b>Show limit</b> controls how many rows appear, including compact 3 and 5 record options for smaller screens.</li>
+          <li><b>View and text links</b> open detail panels or jump to the correct section.</li>
+        </ul>
+      </section>
+
+      <section id="dashboard" class="help-card">
+        <h2>4. Dashboard</h2>
+        <p>
+          The Dashboard is the command view for daily review. It summarizes people, systems/assets, monthly cost,
+          renewals, cleanup work, admin access, focused dashboard tables, org snapshot cards, and the report deck.
+        </p>
+        <img src="./assets/help/01-dashboard.png" alt="OrgAssets dashboard with metrics, command queue, focused tables, org snapshot, and report deck" />
+        <h3>What to review first</h3>
+        <ul>
+          <li><b>Metric cards are shortcuts.</b> Click People, Systems, Cost, Renewals, Cleanup, or Admin Access to open the related module or report.</li>
+          <li><b>Command Queue is operational.</b> Click action labels, system names, or recommendation text to review cleanup work.</li>
+          <li><b>Focused tables show risk areas.</b> Renewals, contractor access, former staff access, high cost systems, and no-owner systems appear when enabled in Settings.</li>
+          <li><b>Report Deck opens key reports.</b> Jump into cleanup, renewals, former staff, contractors, no owner, spend, org roster, and admin access reports.</li>
+        </ul>
+      </section>
+
+      <section id="people" class="help-card">
+        <h2>5. People Directory</h2>
+        <p>
+          The People page tracks staff, contractors, subcontractors, executives, owners, and vendor contacts. It is the
+          source for reporting lines, roles, access assignments, and user account creation.
+        </p>
+        <img src="./assets/help/02-people-directory.png" alt="People directory with filters, export, and staff records" />
+        <img src="./assets/help/12-people-editor-fields.png" alt="Add person editor showing identity, organization, lifecycle, role, and notes fields" />
+        <h3>People fields</h3>
+        <ul>
+          <li><b>Identity</b> tracks first name, last name, email, phone, and title.</li>
+          <li><b>Org fields</b> connect each person to a department, manager, and one or more role cards.</li>
+          <li><b>Lifecycle fields</b> track employment type, status, start date, and end date for offboarding and contractor reviews.</li>
+          <li><b>Use All, All Staff, and type filters.</b> All includes contractors and staff. All Staff excludes contractors.</li>
+          <li><b>Use role cards.</b> Person records use clickable role boxes so multiple roles can be selected or cleared easily.</li>
+          <li><b>People exports can be reimported.</b> Export CSV from People and import it back through Imports with the People record type.</li>
+        </ul>
+      </section>
+
+      <section id="departments" class="help-card">
+        <h2>6. Departments</h2>
+        <p>
+          Departments organize people, managers, systems/assets, costs, and reports. They make it easier to filter the
+          directory, assign ownership, review departmental spend, and understand where cleanup work belongs.
+        </p>
+        <img src="./assets/help/22-departments.png" alt="Departments table showing department names, managers, parent departments, notes, and export controls" />
+        <h3>Department workflow</h3>
+        <ul>
+          <li><b>Create departments early.</b> People and systems/assets use departments for reporting, filtering, ownership, and cost review.</li>
+          <li><b>Assign managers where known.</b> Department managers provide useful context in directory and org chart reviews.</li>
+          <li><b>Use parent departments when needed.</b> Parent relationships help represent larger business areas without overcomplicating the employee org chart.</li>
+          <li><b>Keep names consistent.</b> Clean department names prevent duplicate filters and cleaner report exports.</li>
+        </ul>
+      </section>
+
+      <section id="roles" class="help-card">
+        <h2>7. Roles</h2>
+        <p>
+          Roles describe what people do in the business and how they participate in access, approval, billing, ownership,
+          and review workflows. They are used by People, Employee Org Chart filters, and admin-access reporting.
+        </p>
+        <img src="./assets/help/23-roles.png" alt="Roles table showing role names, descriptions, and export controls" />
+        <h3>Role workflow</h3>
+        <ul>
+          <li><b>Create reusable role labels.</b> Examples include Owner, Approver, Account Owner, Billing Contact, IT Admin, Reviewer, and Department Manager.</li>
+          <li><b>Assign roles on people records.</b> People use clickable role boxes so multiple roles can be selected or cleared quickly.</li>
+          <li><b>Use roles to filter the org chart.</b> Role filters help isolate owners, approvers, admins, and other review groups.</li>
+          <li><b>Keep roles business-friendly.</b> Use labels managers and bookkeepers understand, not only technical access terms.</li>
+        </ul>
+      </section>
+
+      <section id="vendors" class="help-card">
+        <h2>8. Vendors</h2>
+        <p>
+          Vendors are the external companies, providers, platforms, and service contacts behind systems/assets. Vendor
+          records support renewals, system ownership, bookkeeping review, and cleanup reporting.
+        </p>
+        <img src="./assets/help/24-vendors.png" alt="Vendors table showing vendor names, categories, websites, contacts, renewal dates, and export controls" />
+        <h3>Vendor workflow</h3>
+        <ul>
+          <li><b>Create vendors before systems/assets.</b> This keeps asset records from using duplicate vendor spelling or one-off provider names.</li>
+          <li><b>Track website and contact details.</b> These fields help users find the correct portal or business contact during review.</li>
+          <li><b>Use categories and renewal dates.</b> Vendor context helps reports show what is coming due and where spend belongs.</li>
+          <li><b>Export and reimport vendors.</b> Vendor CSV exports can be updated and loaded back through Imports with the Vendors record type.</li>
+        </ul>
+      </section>
+
+      <section id="systems" class="help-card">
+        <h2>9. Systems / Assets</h2>
+        <p>
+          Systems / Assets covers software, subscriptions, memberships, licenses, domains, cloud accounts, banking
+          portals, insurance portals, client portals, websites, hosting, phone systems, and other tools the business
+          depends on.
+        </p>
+        <img src="./assets/help/03-systems-assets.png" alt="Systems and assets register with vendors, owners, costs, renewals, seats, and status" />
+        <img src="./assets/help/13-system-asset-editor-fields.png" alt="System and asset editor showing asset, ownership, billing, assigned people, URL, and notes fields" />
+        <h3>System / asset fields</h3>
+        <ul>
+          <li><b>Add systems with existing values.</b> Name, type, and category fields support existing-value suggestions to reduce duplicate variations.</li>
+          <li><b>Ownership</b> connects the system to a vendor, owner, and department. Setting an owner also keeps the Owner assignment aligned.</li>
+          <li><b>Billing</b> tracks billing frequency, cost amount, renewal date, cancellation deadline, auto renew, seats purchased, seats assigned, and last reviewed date.</li>
+          <li><b>Assigned People</b> lets admins assign users directly from the system window. New assignments use the selected assignment type and access level.</li>
+          <li><b>Seats assigned are derived.</b> Active assignment rows update assigned-seat counts automatically.</li>
+          <li><b>System exports can be reimported.</b> Friendly columns such as System/Asset, Vendor, Owner, Department, Monthly Cost, Annual Cost, and Seats map back into import fields.</li>
+        </ul>
+      </section>
+
+      <section id="assignments" class="help-card">
+        <h2>10. Assignments</h2>
+        <p>
+          Assignments connect people to systems/assets. This access ledger powers systems touched, admin access, former
+          staff access, contractor cleanup, seat counts, and many report links.
+        </p>
+        <img src="./assets/help/04-assignments.png" alt="Assignments page showing people connected to systems/assets with access levels and status" />
+        <img src="./assets/help/14-assignment-editor-fields.png" alt="Assignment editor showing system, person, assignment type, access level, status, dates, and notes fields" />
+        <h3>Assignment fields</h3>
+        <ul>
+          <li><b>System / Asset and Person</b> define the access relationship. OrgAssets prevents duplicate active assignments for the same person and system.</li>
+          <li><b>Assignment type explains the relationship.</b> Examples include Owner, Licensed User, Billing Contact, Technical Contact, Reviewer, and Approver.</li>
+          <li><b>Access level explains risk.</b> Owner, Admin, Billing Admin, Manager, User, Read Only, and No Access support admin-access reporting.</li>
+          <li><b>Status controls cleanup.</b> Active assignments for inactive people or ended contractors generate action items and reports.</li>
+          <li><b>Assignments can be created anywhere.</b> Add them from Assignments or assign people directly while editing a system/asset.</li>
+          <li><b>Assignment exports can be reimported.</b> Person and System/Asset names are resolved back to existing IDs during import.</li>
+          <li><b>Standard CSV export</b> creates a consistent assignment format for MSPs, bookkeepers, and local reporting utilities.</li>
+        </ul>
+      </section>
+
+      <section id="offboarding" class="help-card">
+        <h2>11. Offboarding</h2>
+        <p>
+          Offboarding gives admins one checklist for a selected person. It shows every active system, license, account,
+          vendor portal, owner assignment, and admin-level access record tied to that person.
+        </p>
+        <img src="./assets/help/25-offboarding.png" alt="Offboarding view showing person selector, active assignment summary, revoke actions, and assignment checklist" />
+        <h3>Offboarding workflow</h3>
+        <ul>
+          <li><b>Select a person</b> to see active assignments, admin-level exposure, monthly spend exposure, and current person status.</li>
+          <li><b>Revoke individual rows</b> with the Revoked checkbox when access has been removed from that system or portal.</li>
+          <li><b>Revoke all active assignments</b> when a full offboarding pass is complete and every active row should be marked Removed.</li>
+          <li><b>Mark Person Inactive</b> updates the person status and end date while preserving the person record for audit history.</li>
+          <li><b>Export Checklist PDF</b> creates a branded offboarding packet for managers, owners, or audit evidence.</li>
+          <li><b>Audit trail events</b> are recorded for offboarding revokes and status changes.</li>
+        </ul>
+      </section>
+
+      <section id="org" class="help-card">
+        <h2>12. Employee Org Chart</h2>
+        <p>
+          The Employee Org Chart is the visual reporting tree. It supports department or whole-company views, role
+          filters, density, card detail boxes, zoom, drag-and-drop organization, undo/redo, and PDF printable views.
+        </p>
+        <img src="./assets/help/05-employee-org-chart-map.png" alt="Employee org chart with zoom controls, organize tree, print view selector, and card detail options" />
+        <img src="./assets/help/15-org-chart-print-controls.png" alt="Employee org chart controls showing whole-company scope, simple print mode, organize tree mode, and card detail toggle boxes" />
+        <h3>Org chart workflow</h3>
+        <ul>
+          <li><b>Choose scope and filters.</b> View the whole company or one department, then filter by role.</li>
+          <li><b>Use card detail boxes.</b> Systems touched, roles, and access flags are independent clickable boxes.</li>
+          <li><b>Organize the tree.</b> Turn on Organize Tree, drag a person onto a manager, or drop onto the <b>Drop here to remove manager</b> target to make that person a top-level card.</li>
+          <li><b>Undo and redo tree edits.</b> Undo and Redo step through the last three reporting-structure changes.</li>
+          <li><b>Use Fit, plus, and minus.</b> Fit returns to automatic zoom. Plus and minus switch to manual zoom.</li>
+          <li><b>Export printable charts.</b> Full exports the detailed card view with selected details. Simple exports a clean icon tree with head icons, names, and titles only.</li>
+        </ul>
+      </section>
+
+      <section id="details" class="help-card">
+        <h2>13. Detail Panel</h2>
+        <p>
+          The detail panel is the slide-out drawer used for quick inspection. It opens from View buttons, text links,
+          report rows, dashboard shortcuts, and org chart cards. Use it when you want to check related records without
+          leaving your current table, report, or org chart view. Close it when you need the full screen back.
+        </p>
+        <img src="./assets/help/06-detail-panel.png" alt="Detail panel opened from an org chart card showing related person details" />
+        <img src="./assets/help/20-system-detail-panel.png" alt="System detail panel showing vendor, owner, department, cost, renewal, seats, and active assigned people" />
+        <h3>How details are used</h3>
+        <ul>
+          <li><b>Close</b> returns the full screen to the underlying table, report, or org chart.</li>
+          <li><b>People details</b> show department, manager, employment type, status, roles, direct reports, and systems touched.</li>
+          <li><b>System details</b> show vendor, owner, department, cost, renewal, seats, and active assigned people.</li>
+          <li><b>Department, vendor, and role details</b> summarize connected people, systems, and assignments.</li>
+          <li><b>Assignment details</b> show the person, system, assignment type, access level, dates, and status.</li>
+        </ul>
+      </section>
+
+      <section id="actions" class="help-card">
+        <h2>14. Action Center</h2>
+        <p>
+          Action Center generates cleanup work from business rules. It is the fastest way to find owner gaps, renewal
+          risk, stale reviews, unused seats, former staff access, and contractor access past end date.
+        </p>
+        <img src="./assets/help/07-action-center.png" alt="Action Center table with action type, reason, person, system, vendor, owner, department, and due date" />
+        <h3>Cleanup rules</h3>
+        <ul>
+          <li><b>Assign owner</b> appears when an active system has no owner.</li>
+          <li><b>Renew</b> appears when renewal dates are near or overdue based on the View Rules renewal window.</li>
+          <li><b>Review</b> appears when a system has not been reviewed recently.</li>
+          <li><b>Remove access</b> appears when former staff or ended contractors still have active assignments.</li>
+          <li><b>Reduce seats</b> appears when purchased seats exceed active assigned seats.</li>
+        </ul>
+      </section>
+
+      <section id="reports" class="help-card">
+        <h2>15. Reports</h2>
+        <p>
+          Reports answer the main audit and operating questions. Report values are clickable, visual breakdowns are
+          clickable, table filters are report-specific, and Export PDF follows the active filters, search, department
+          selector, and multi-column sort.
+        </p>
+        <img src="./assets/help/08-reports.png" alt="Reports page with cleanup action report, report filters, multi-column sort, visual breakdown, and export buttons" />
+        <img src="./assets/help/16-reports-filters-export.png" alt="Reports page scrolled to a subscription cost table with system, vendor, owner, billing, cost, and seat columns" />
+        <h3>Available reports</h3>
+        <ul>
+          <li>Staff Structure and Org Chart Roster</li>
+          <li>Systems Touched by Person and Person Asset Summary</li>
+          <li>Subscription Cost and Department Monthly Cost</li>
+          <li>Former Staff Access and Contractor Access</li>
+          <li>Vendor Renewal and No Owner</li>
+          <li>Admin Access by Role and Cleanup Action</li>
+        </ul>
+        <h3>Report tools</h3>
+        <ul>
+          <li><b>Department selector</b> filters rows that have a department.</li>
+          <li><b>Report filters</b> appear when useful, including vendor, status, type, role, access level, date window, cost band, action, and severity.</li>
+          <li><b>Multi-column sort</b> supports up to three sort levels. Header clicks set the primary sort, and Shift-click adds another sort level.</li>
+          <li><b>Export CSV</b> exports the current sorted and filtered report rows without hidden metadata.</li>
+          <li><b>Export PDF</b> creates a clean branded report PDF using the current sorted and filtered rows, with an executive summary page first.</li>
+        </ul>
+      </section>
+
+      <section id="imports" class="help-card">
+        <h2>16. Imports</h2>
+        <p>
+          Imports support both technical templates and section export files. That means you can export People, Systems /
+          Assets, Assignments, Departments, Roles, or Vendors from their section and import that same CSV back through
+          the matching record type.
+        </p>
+        <img src="./assets/help/09-imports.png" alt="Imports page with templates, import workflow, and section export column compatibility" />
+        <img src="./assets/help/17-import-analysis-preview.png" alt="Imports page showing analyzed CSV rows above the section export column compatibility table" />
+        <h3>Import workflow</h3>
+        <ul>
+          <li><b>Download templates</b> for raw import columns such as IDs and internal field names.</li>
+          <li><b>Analyze before import</b> to preview New, Update, No change, and Needs Fix rows before loading anything.</li>
+          <li><b>Diff Review</b> shows which fields will change so imported files can be checked before data is applied.</li>
+          <li><b>Section export columns are accepted.</b> Friendly names such as Person, Department, Vendor, Owner, System/Asset, Roles, Monthly Cost, Annual Cost, and Seats are mapped back to records.</li>
+          <li><b>Existing records are merged.</b> Reimporting a section export updates matching records by ID, email, display name, system name, vendor name, or assignment relationship instead of creating duplicates.</li>
+          <li><b>Unsafe IDs are rejected.</b> Imported IDs must use a safe format so imported files cannot break page attributes.</li>
+          <li><b>Load dependencies first.</b> People, systems, departments, vendors, and roles should exist before assignments are imported.</li>
+        </ul>
+      </section>
+
+      <section id="export-locations" class="help-card">
+        <h2>17. Export Locations</h2>
+        <p>
+          There is no standalone exports area. Exports live where the work happens.
+        </p>
+        <ul>
+          <li><b>Tables</b> have Export CSV buttons in their toolbar.</li>
+          <li><b>Reports</b> have Export CSV and Export PDF buttons. PDF output uses report branding and respects filters and sort order.</li>
+          <li><b>Employee Org Chart</b> has Printable View with Full and Simple PDF modes.</li>
+          <li><b>Offboarding</b> is admin-only and has Export Checklist PDF for a selected person.</li>
+          <li><b>Assignments</b> has Export Standard CSV, and Imports has Assignment Schema CSV.</li>
+          <li><b>Settings</b> has admin-only Folder Backup, which downloads the full working host folder ZIP and browser-data snapshot.</li>
+        </ul>
+      </section>
+
+      <section id="settings" class="help-card">
+        <h2>18. Settings</h2>
+        <p>
+          Settings control report branding, dashboard layout, list limits, user accounts, audit trail exports, backups,
+          demo data, and the boundaries for what should and should not be stored in OrgAssets.
+        </p>
+        <img src="./assets/help/10-settings.png" alt="Settings page with report branding, dashboard layout, Show Org Snapshot, and data field options" />
+        <img src="./assets/help/18-settings-report-branding-layout.png" alt="Settings page scrolled to dashboard layout, data field options, and folder backup controls" />
+        <img src="./assets/help/26-audit-trail.png" alt="Audit Trail settings panel with CSV and PDF export buttons, search controls, and local event history" />
+        <h3>Settings workflow</h3>
+        <ul>
+          <li><b>Report Branding</b> uploads a logo and customizes the PDF report header. The preview shows how reports will look.</li>
+          <li><b>Dashboard Layout</b> sets default org chart scope, chart density, cost KPI visibility, Org Snapshot visibility, focused dashboard tables, and report deck visibility.</li>
+          <li><b>Data Field Options</b> sets default row limit, person status, employment type, system status, assignment access, and advanced field visibility.</li>
+          <li><b>Audit Trail</b> exports local event history as CSV or PDF, including hash-chain markers for integrity review.</li>
+          <li><b>Portal Boundaries</b> define the purpose of the portal and remind users not to store credentials.</li>
+        </ul>
+      </section>
+
+      <section id="users-backup" class="help-card">
+        <h2>19. Users, Demo Data, and Folder Backup</h2>
+        <p>
+          Admin users manage accounts, demo data resets, and disaster-recovery exports from Settings. Standard users
+          can review the portal but are limited away from Settings, Imports, Offboarding, backups, demo data resets,
+          and business-data editing.
+        </p>
+        <img src="./assets/help/11-users-backup.png" alt="Settings page showing user account management, Enable All Staff, Disable All Staff, summary cards, and account actions" />
+        <img src="./assets/help/19-settings-users-backup-demo.png" alt="Clear Demo Data confirmation explaining that admin and custom accounts are preserved while People-linked user accounts are removed" />
+        <h3>Admin workflow</h3>
+        <ul>
+          <li><b>Create users from people.</b> Select an existing person and create a portal account.</li>
+          <li><b>Enable or disable all staff users.</b> Create or disable staff login accounts in bulk. Contractors, vendor contacts, custom accounts, and the current signed-in account are not included in the bulk action.</li>
+          <li><b>Edit users.</b> Change username, person link, role, status, and password.</li>
+          <li><b>Admin role</b> has access to all sections, add/edit/delete controls, Imports, Offboarding, Users, Audit Trail exports, Folder Backup, demo data reset, report branding, and portal defaults.</li>
+          <li><b>User role</b> can sign in, search, review dashboards, people, departments, roles, vendors, systems/assets, assignments, org chart, action center, reports, detail panels, and available section exports. Users cannot change business data or access admin maintenance areas.</li>
+          <li><b>Folder Backup</b> downloads a disaster-recovery ZIP of the working portal folder plus a current browser-data snapshot.</li>
+          <li><b>Seed Demo Data and Clear Demo Data</b> are admin-only actions at the bottom of Settings. Seed preserves user accounts. Clear preserves the admin and custom accounts, and removes user accounts linked to People records.</li>
+        </ul>
+      </section>
+
+      <section id="security" class="help-card">
+        <h2>20. Security Guidance</h2>
+        <p>
+          OrgAssets contains sensitive operational context: people, contractors, systems, vendors, access assignments,
+          privileged roles, renewal dates, spend, ownership, and cleanup issues. Treat it as internal infrastructure.
+        </p>
+        <div class="workflow-grid">
+          <article class="mini-card">
+            <strong>Trusted local beta</strong>
+            <p>Default server binding is same-computer access. Use demo or sanitized data unless the machine and users are trusted.</p>
+          </article>
+          <article class="mini-card">
+            <strong>Internal deployment</strong>
+            <p>Use firewall scoping, VPN or internal DNS, HTTPS, folder backups, and role-based accounts before LAN use.</p>
+          </article>
+          <article class="mini-card">
+            <strong>Future production</strong>
+            <p>Move users, sessions, authorization, audit history, backups, and password hashing to trusted server/database services.</p>
+          </article>
+        </div>
+        <div class="callout danger">
+          LAN-only access reduces exposure, but it does not replace authentication, authorization, audit logging, backups,
+          HTTPS, or operational security.
+        </div>
+      </section>
+
+      <section id="troubleshooting" class="help-card">
+        <h2>21. Troubleshooting</h2>
+        <ul>
+          <li><b>Cannot sign in:</b> confirm the account is active and the username is spelled correctly.</li>
+          <li><b>Settings or Imports missing:</b> sign in as an admin account.</li>
+          <li><b>Org chart feels crowded:</b> use Fit, reduce card details, use department scope, or use the Simple printable view.</li>
+          <li><b>PDF report logo is missing:</b> upload a logo in Settings, or use the default TechSavvy logo.</li>
+          <li><b>Import rows fail:</b> analyze the CSV and check required fields. For section exports, choose the matching record type.</li>
+          <li><b>Backup fails:</b> confirm you are signed in as an admin, then contact your OrgAssets administrator or support team.</li>
+        </ul>
+      </section>
+
+      <section id="about" class="help-card">
+        <h2>22. About Us</h2>
+        <p>
+          This OrgAssets portal was developed for practical, day-to-day people-to-systems management: searchable staff
+          and contractor records, org chart structure, systems/assets, access assignments, cleanup actions, imports,
+          folder backups, and branded PDF reporting in one local portal.
+        </p>
+        <div class="callout">
+          <h3>Software Developed by:</h3>
+          <p><b>TechSavvy Consulting, LLC</b></p>
+          <p class="small"><a href="https://www.techsavvy.consulting" target="_blank" rel="noopener">https://www.techsavvy.consulting</a></p>
+          <p class="small"><a href="mailto:support@techsavvy.consulting">support@techsavvy.consulting</a></p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

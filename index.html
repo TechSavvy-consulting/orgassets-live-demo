@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OrgAssets Portal</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="logged-out">
+    <svg aria-hidden="true" class="icon-sprite" focusable="false">
+      <symbol id="icon-dashboard" viewBox="0 0 24 24">
+        <path d="M3 13h8V3H3v10Zm0 8h8v-6H3v6Zm10 0h8V11h-8v10Zm0-18v6h8V3h-8Z" />
+      </symbol>
+      <symbol id="icon-people" viewBox="0 0 24 24">
+        <path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7.5 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM9 13c-4 0-7 2-7 4.5V20h14v-2.5C16 15 13 13 9 13Zm7.5 1c-.7 0-1.3.1-1.9.3 1.9 1 3.4 2.5 3.4 4.5V20h4v-2.2c0-2.1-2.4-3.8-5.5-3.8Z" />
+      </symbol>
+      <symbol id="icon-departments" viewBox="0 0 24 24">
+        <path d="M4 4h16v5H4V4Zm0 7h7v9H4v-9Zm9 0h7v9h-7v-9Z" />
+      </symbol>
+      <symbol id="icon-roles" viewBox="0 0 24 24">
+        <path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Zm0 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm5 11.2c-1.2 1.3-2.9 2.4-5 3-2.1-.6-3.8-1.7-5-3 .5-2.1 2.5-3.2 5-3.2s4.5 1.1 5 3.2Z" />
+      </symbol>
+      <symbol id="icon-vendors" viewBox="0 0 24 24">
+        <path d="M4 7h16l-1.5 5H5.5L4 7Zm1 7h14v6H5v-6Zm2-10h10l2 2H5l2-2Z" />
+      </symbol>
+      <symbol id="icon-systems" viewBox="0 0 24 24">
+        <path d="M4 4h16v10H4V4Zm2 2v6h12V6H6Zm-1 10h14v2H5v-2Zm5 3h4v2h-4v-2Z" />
+      </symbol>
+      <symbol id="icon-assignments" viewBox="0 0 24 24">
+        <path d="M7 3a4 4 0 0 1 3.5 6H14a4 4 0 1 1 0 2h-3.5A4 4 0 1 1 7 3Zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm10 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM7 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+      </symbol>
+      <symbol id="icon-offboarding" viewBox="0 0 24 24">
+        <path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4 0-7 2-7 4.5V20h10.8A6.5 6.5 0 0 1 12 17c0-1.3.4-2.5 1.1-3.5A10.6 10.6 0 0 0 9 13Zm9.8 1.2 1.4 1.4-3.7 3.7-2.1-2.1 1.4-1.4.7.7 2.3-2.3ZM17 11a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z" />
+      </symbol>
+      <symbol id="icon-topology" viewBox="0 0 24 24">
+        <path d="M10 3h4v4h-4V3Zm-6 8h4v4H4v-4Zm12 0h4v4h-4v-4ZM6 17h4v4H6v-4Zm8 0h4v4h-4v-4Zm-1-8v2h4v-2h-4Zm-6 2h4V9H7v2Zm4 4v2h2v-2h-2Zm2-4v4h-2v-4h2Z" />
+      </symbol>
+      <symbol id="icon-actions" viewBox="0 0 24 24">
+        <path d="M12 2 2 20h20L12 2Zm1 15h-2v-2h2v2Zm0-4h-2V8h2v5Z" />
+      </symbol>
+      <symbol id="icon-reports" viewBox="0 0 24 24">
+        <path d="M5 3h14v18H5V3Zm3 12h2V9H8v6Zm3 3h2V6h-2v12Zm3-4h2v-4h-2v4Z" />
+      </symbol>
+      <symbol id="icon-imports" viewBox="0 0 24 24">
+        <path d="M12 3 7 8h3v7h4V8h3l-5-5ZM5 17h14v4H5v-4Z" />
+      </symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24">
+        <path d="M19.4 13.5c.1-.5.1-1 .1-1.5s0-1-.1-1.5l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2.6-1.5L14 2h-4l-.4 2.5A7 7 0 0 0 7 6L4.6 5l-2 3.5 2 1.5c-.1.5-.1 1-.1 1.5s0 1 .1 1.5l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 2.6 1.5L10 22h4l.4-2.5A7 7 0 0 0 17 18l2.4 1 2-3.5-2-1.5ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z" />
+      </symbol>
+      <symbol id="icon-help" viewBox="0 0 24 24">
+        <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 17a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Zm1.2-5.1h-2c0-1.1.4-1.9 1.4-2.5.8-.5 1.2-.9 1.2-1.6 0-.9-.7-1.5-1.7-1.5s-1.7.6-1.8 1.6h-2C8.4 7.8 9.9 6.5 12 6.5c2.3 0 3.9 1.3 3.9 3.2 0 1.3-.6 2.2-1.9 3-.6.4-.8.7-.8 1.2Z" />
+      </symbol>
+    </svg>
+    <dialog id="loginDialog" class="login-dialog">
+      <form id="loginForm" method="dialog">
+        <div class="login-panel">
+          <img class="login-logo" src="./assets/brand/techsavvy-logo.png" alt="TechSavvy Consulting" />
+          <div>
+            <p class="eyebrow">OrgAssets</p>
+            <h2>Sign in</h2>
+          </div>
+          <label>Username
+            <input id="loginUsername" type="text" autocomplete="username" required />
+          </label>
+          <label>Password
+            <input id="loginPassword" type="password" autocomplete="current-password" required />
+          </label>
+          <p id="loginError" class="login-error" role="alert"></p>
+          <button type="submit">Sign In</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <div class="brand">
+          <img class="brand-logo" src="./assets/brand/techsavvy-logo.png" alt="TechSavvy Consulting" />
+          <div>
+            <h1>OrgAssets</h1>
+            <p>People, systems, ownership</p>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-item active" data-view="dashboard"><svg class="nav-icon"><use href="#icon-dashboard"></use></svg><span>Dashboard</span></button>
+          <button class="nav-item" data-view="people"><svg class="nav-icon"><use href="#icon-people"></use></svg><span>People</span></button>
+          <button class="nav-item" data-view="departments"><svg class="nav-icon"><use href="#icon-departments"></use></svg><span>Departments</span></button>
+          <button class="nav-item" data-view="roles"><svg class="nav-icon"><use href="#icon-roles"></use></svg><span>Roles</span></button>
+          <button class="nav-item" data-view="vendors"><svg class="nav-icon"><use href="#icon-vendors"></use></svg><span>Vendors</span></button>
+          <button class="nav-item" data-view="systems"><svg class="nav-icon"><use href="#icon-systems"></use></svg><span>Systems / Assets</span></button>
+          <button class="nav-item" data-view="assignments"><svg class="nav-icon"><use href="#icon-assignments"></use></svg><span>Assignments</span></button>
+          <button class="nav-item" data-view="offboarding"><svg class="nav-icon"><use href="#icon-offboarding"></use></svg><span>Offboarding</span></button>
+          <button class="nav-item" data-view="topology"><svg class="nav-icon"><use href="#icon-topology"></use></svg><span>Employee Org Chart</span></button>
+          <button class="nav-item" data-view="actions"><svg class="nav-icon"><use href="#icon-actions"></use></svg><span>Action Center</span></button>
+          <button class="nav-item" data-view="reports"><svg class="nav-icon"><use href="#icon-reports"></use></svg><span>Reports</span></button>
+          <button class="nav-item" data-view="imports"><svg class="nav-icon"><use href="#icon-imports"></use></svg><span>Imports</span></button>
+          <button class="nav-item" data-view="settings"><svg class="nav-icon"><use href="#icon-settings"></use></svg><span>Settings</span></button>
+          <a class="nav-item nav-link" href="./help.html"><svg class="nav-icon"><use href="#icon-help"></use></svg><span>Help / About</span></a>
+        </nav>
+
+        <section class="sidebar-panel">
+          <h2>View Rules</h2>
+          <div id="viewRuleStats" class="view-rule-stats"></div>
+          <label>
+            Renewal window
+            <select id="renewalWindow">
+              <option value="7">7 days</option>
+              <option value="30" selected>30 days</option>
+              <option value="60">60 days</option>
+              <option value="90">90 days</option>
+            </select>
+          </label>
+          <label class="toggle-row rule-toggle">
+            <input id="showInactive" type="checkbox" />
+            <span>Show inactive people</span>
+          </label>
+          <label class="toggle-row rule-toggle">
+            <input id="showContractors" type="checkbox" checked />
+            <span>Show contractors</span>
+          </label>
+        </section>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Personnel access and asset control</p>
+            <h2 id="viewTitle">Dashboard</h2>
+          </div>
+          <div class="topbar-actions">
+            <label class="search">
+              <span>Search</span>
+              <input id="globalSearch" type="search" placeholder="Person, system, vendor, role, department..." />
+            </label>
+            <div class="user-session">
+              <span id="currentUserLabel">Not signed in</span>
+              <button id="logoutUser" type="button">Sign Out</button>
+            </div>
+          </div>
+        </header>
+
+        <section id="dashboard" class="view active" aria-labelledby="viewTitle">
+          <div class="metric-grid" id="metricGrid"></div>
+          <div class="dashboard-command-grid">
+            <section class="panel action-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Command Queue</p>
+                  <h3>Items Needing Action</h3>
+                </div>
+                <div class="button-row">
+                  <button type="button" data-view-jump="actions">Open Action Center</button>
+                  <button type="button" data-view-jump="settings">Dashboard Layout</button>
+                </div>
+              </div>
+              <div id="actionPreview" class="action-list"></div>
+            </section>
+            <section class="panel org-snapshot-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Org Snapshot</p>
+                  <h3>People structure</h3>
+                </div>
+                <button type="button" data-view-jump="topology">Open Org Chart</button>
+              </div>
+              <div id="orgSnapshot" class="snapshot-grid"></div>
+            </section>
+            <section class="panel report-deck-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Report Deck</p>
+                  <h3>One-click operating reports</h3>
+                </div>
+                <button type="button" data-view-jump="reports">Open Reports</button>
+              </div>
+              <div id="reportDeck" class="report-deck"></div>
+            </section>
+          </div>
+
+          <div class="dashboard-grid focused-dashboard-grid">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Renewals</p>
+                  <h3>Upcoming Renewals</h3>
+                </div>
+              </div>
+              <div id="upcomingRenewals" class="table-wrap compact"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Contractors</p>
+                  <h3>Access Past End Date</h3>
+                </div>
+              </div>
+              <div id="contractorAccessTable" class="table-wrap compact"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Cleanup</p>
+                  <h3>Accounts Assigned to Former Staff</h3>
+                </div>
+              </div>
+              <div id="formerStaffTable" class="table-wrap compact"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Spend</p>
+                  <h3>Highest Monthly Cost Systems</h3>
+                </div>
+              </div>
+              <div id="highCostTable" class="table-wrap compact"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Ownership</p>
+                  <h3>Systems With No Owner</h3>
+                </div>
+              </div>
+              <div id="noOwnerTable" class="table-wrap compact"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="people" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Directory</p>
+                <h3>Staff, contractors, and contacts</h3>
+              </div>
+              <button type="button" data-record-action="add" data-record-type="person">Add Person</button>
+            </div>
+            <div id="peopleTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="departments" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Departments</p>
+                <h3>Department ownership and cost</h3>
+              </div>
+              <button type="button" data-record-action="add" data-record-type="department">Add Department</button>
+            </div>
+            <div id="departmentTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="roles" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Roles</p>
+                <h3>Business roles and admin-level access</h3>
+              </div>
+              <button type="button" data-record-action="add" data-record-type="role">Add Role</button>
+            </div>
+            <div id="roleTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="vendors" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Vendors</p>
+                <h3>Providers, renewal dates, and spend</h3>
+              </div>
+              <button type="button" data-record-action="add" data-record-type="vendor">Add Vendor</button>
+            </div>
+            <div id="vendorTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="systems" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Asset Register</p>
+                <h3>Systems, subscriptions, memberships, licenses, domains, and portals</h3>
+              </div>
+              <button type="button" data-record-action="add" data-record-type="system">Add System / Asset</button>
+            </div>
+            <div id="systemTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="assignments" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Access Ledger</p>
+                <h3>People connected to systems/assets</h3>
+              </div>
+              <div class="button-row">
+                <button id="exportStandardAssignments" type="button">Export Standard CSV</button>
+                <button type="button" data-record-action="add" data-record-type="assignment">Add Assignment</button>
+              </div>
+            </div>
+            <div id="assignmentTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="offboarding" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Guided Offboarding</p>
+                <h3>Review every active asset, license, and portal touched by a person</h3>
+              </div>
+              <div class="button-row">
+                <button id="offboardingExportPdf" type="button">Export Checklist PDF</button>
+              </div>
+            </div>
+            <div class="offboarding-layout">
+              <aside class="offboarding-sidebar">
+                <label>Person to offboard
+                  <select id="offboardingPerson"></select>
+                </label>
+                <button id="offboardingOpenPerson" type="button">View Person in People</button>
+                <div id="offboardingSummary" class="offboarding-summary"></div>
+                <button id="offboardingMarkInactive" type="button">Mark Person Inactive</button>
+                <button id="offboardingRevokeAll" type="button">Revoke All Active Assignments</button>
+                <button id="offboardingUndo" type="button" disabled>Undo Last Offboarding Change</button>
+              </aside>
+              <div class="offboarding-main">
+                <div id="offboardingChecklist" class="offboarding-checklist"></div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section id="topology" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Employee Org Chart</p>
+                <h3>Company reporting structure by employee, manager, department, and role</h3>
+              </div>
+              <div class="chart-tools">
+                <button id="topologyZoomOut" type="button" title="Zoom out">-</button>
+                <button id="topologyZoomReset" type="button">Fit</button>
+                <button id="topologyZoomIn" type="button" title="Zoom in">+</button>
+                <button id="topologyUndoTree" type="button" title="Undo org chart move" disabled>Undo</button>
+                <button id="topologyRedoTree" type="button" title="Redo org chart move" disabled>Redo</button>
+                <button id="topologyOrganizeTree" type="button">Organize Tree</button>
+                <label class="print-mode-select">Print view
+                  <select id="topologyPrintMode">
+                    <option value="full" selected>Full</option>
+                    <option value="simple">Simple</option>
+                  </select>
+                </label>
+                <button id="topologyPrintPdf" type="button">Printable View</button>
+              </div>
+            </div>
+            <div class="filter-grid">
+              <label>Chart scope
+                <select id="topologyScope">
+                  <option value="department" selected>Department only</option>
+                  <option value="company">Whole company</option>
+                </select>
+              </label>
+              <label>Department <select id="topologyDepartment"></select></label>
+              <label>Role <select id="topologyRole"></select></label>
+              <label>Chart density
+                <select id="topologyDensity">
+                  <option value="compact" selected>Compact</option>
+                  <option value="comfortable">Comfortable</option>
+                </select>
+              </label>
+              <fieldset class="card-detail-options">
+                <legend>Card detail</legend>
+                <label class="toggle-card"><input id="topologySystems" type="checkbox" checked /> <span>Systems touched</span></label>
+                <label class="toggle-card"><input id="topologyRoles" type="checkbox" /> <span>Roles</span></label>
+                <label class="toggle-card"><input id="topologyAccessFlags" type="checkbox" /> <span>Access flags</span></label>
+              </fieldset>
+            </div>
+            <div id="topologyMap" class="employee-chart-wrap"></div>
+          </section>
+        </section>
+
+        <section id="actions" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Action Center</p>
+                <h3>Review, renew, cancel, transfer, deactivate, assign owner, remove access</h3>
+              </div>
+            </div>
+            <div id="actionTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="reports" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Reports</p>
+                <h3 id="reportQuestion">Who works here, and who manages them?</h3>
+              </div>
+              <div class="report-controls">
+                <select id="reportType">
+                  <option value="staffStructure">Staff Structure Report</option>
+                  <option value="orgChartRoster">Org Chart Roster Report</option>
+                  <option value="systemsTouched">Systems Touched by Person Report</option>
+                  <option value="subscriptionCost">Subscription Cost Report</option>
+                  <option value="formerStaffAccess">Former Staff Access Report</option>
+                  <option value="contractorAccess">Contractor Access Report</option>
+                  <option value="vendorRenewal">Vendor Renewal Report</option>
+                  <option value="noOwner">No Owner Report</option>
+                  <option value="adminAccessByRole">Admin Access by Role Report</option>
+                  <option value="departmentMonthlyCost">Department Monthly Cost Report</option>
+                  <option value="personAssetSummary">Person Asset Summary Report</option>
+                  <option value="cleanupAction">Cleanup Action Report</option>
+                </select>
+                <select id="reportDepartment"></select>
+                <button id="downloadReport" type="button">Export CSV</button>
+                <button id="printReport" type="button">Export PDF</button>
+              </div>
+            </div>
+            <div id="reportVisuals" class="report-visuals"></div>
+            <div id="reportOutput" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="imports" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Data Intake</p>
+                <h3>Templates, CSV analysis, and local imports</h3>
+              </div>
+              <button id="downloadTemplates" type="button">Download CSV Templates</button>
+              <button id="downloadAssignmentSchema" type="button">Assignment Schema CSV</button>
+            </div>
+            <div id="importSummary" class="operation-grid"></div>
+            <div class="workflow-panel">
+              <div>
+                <p class="eyebrow">Import Workflow</p>
+                <h3>Analyze a CSV before loading it</h3>
+              </div>
+              <div class="workflow-controls">
+                <label>Record type
+                  <select id="importType"></select>
+                </label>
+                <label>CSV file
+                  <input id="importFile" type="file" accept=".csv,text/csv" />
+                </label>
+                <button id="analyzeImport" type="button">Analyze CSV</button>
+                <button id="applyImport" type="button" disabled>Import Valid Rows</button>
+              </div>
+              <div id="importPreview" class="import-preview"></div>
+            </div>
+            <div id="importTable" class="table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="settings" class="view" aria-labelledby="viewTitle">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Settings</p>
+                <h3>Portal positioning and data boundaries</h3>
+              </div>
+            </div>
+            <div class="settings-grid">
+              <article>
+                <strong>Purpose</strong>
+                <p>Track the employee organizational chart, business systems, assignments, renewals, ownership, spend, and cleanup actions.</p>
+              </article>
+              <article>
+                <strong>Not Stored</strong>
+                <p>No usernames, passwords, API keys, secrets, recovery codes, or credential notes.</p>
+              </article>
+              <article>
+                <strong>Deployment</strong>
+                <p>Internal network only, with authentication and audit logging when this becomes database-backed.</p>
+              </article>
+            </div>
+            <div class="settings-editor">
+              <h3>Report Branding</h3>
+              <div class="report-brand-settings">
+                <div class="settings-form">
+                  <label>Report logo
+                    <input id="settingReportLogo" type="file" accept="image/*" />
+                  </label>
+                  <label class="field-wide">Report header
+                    <textarea id="settingReportHeader" rows="4" placeholder="Company name, address, phone, website, or review meeting title"></textarea>
+                  </label>
+                  <div class="button-column">
+                    <button id="clearReportLogo" type="button">Clear Uploaded Logo</button>
+                  </div>
+                </div>
+                <div id="reportBrandPreview" class="report-brand-preview" aria-label="Report branding preview"></div>
+              </div>
+              <h3>Dashboard Layout</h3>
+              <div class="settings-form">
+                <label>Default org chart scope
+                  <select id="settingDefaultScope">
+                    <option value="department">Department only</option>
+                    <option value="company">Whole company</option>
+                  </select>
+                </label>
+                <label>Default org chart density
+                  <select id="settingDefaultDensity">
+                    <option value="compact">Compact</option>
+                    <option value="comfortable">Comfortable</option>
+                  </select>
+                </label>
+                <label class="toggle-row"><input id="settingShowCostKpis" type="checkbox" /> Show cost KPI cards</label>
+                <label class="toggle-row"><input id="settingShowOrgSnapshot" type="checkbox" /> Show Org Snapshot</label>
+                <label class="toggle-row"><input id="settingShowFocusedTables" type="checkbox" /> Show focused dashboard tables</label>
+                <label class="toggle-row"><input id="settingShowReportDeck" type="checkbox" /> Show report deck</label>
+              </div>
+              <h3>Data Field Options</h3>
+              <div class="settings-form">
+                <label>Default list limit
+                  <select id="settingDefaultPageSize">
+                    <option value="3">3 records</option>
+                    <option value="5">5 records</option>
+                    <option value="10">10 records</option>
+                    <option value="25">25 records</option>
+                    <option value="50">50 records</option>
+                    <option value="100">100 records</option>
+                    <option value="all">All records</option>
+                  </select>
+                </label>
+                <label>Default person status
+                  <select id="settingDefaultPersonStatus">
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Terminated">Terminated</option>
+                    <option value="Archived">Archived</option>
+                  </select>
+                </label>
+                <label>Default employment type
+                  <select id="settingDefaultEmploymentType">
+                    <option value="Employee">Employee</option>
+                    <option value="Contractor">Contractor</option>
+                    <option value="Subcontractor">Subcontractor</option>
+                    <option value="Executive">Executive</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Vendor Contact">Vendor Contact</option>
+                  </select>
+                </label>
+                <label>Default system status
+                  <select id="settingDefaultSystemStatus">
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Archived">Archived</option>
+                  </select>
+                </label>
+                <label>Default assignment access
+                  <select id="settingDefaultAssignmentAccess">
+                    <option value="User">User</option>
+                    <option value="Read Only">Read Only</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Billing Admin">Billing Admin</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Owner">Owner</option>
+                  </select>
+                </label>
+                <label class="toggle-row"><input id="settingShowAdvancedFields" type="checkbox" /> Show advanced notes, contacts, and description fields in editors</label>
+              </div>
+              <div class="button-row">
+                <button id="savePortalSettings" type="button">Save Settings</button>
+                <button id="resetPortalSettings" type="button">Reset Settings</button>
+              </div>
+              <h3>Folder Backup</h3>
+              <div class="backup-panel">
+                <p>Download a disaster recovery ZIP of the working host folder. The backup includes the project files from the local server folder and a browser-data snapshot of the current portal records.</p>
+                <div class="settings-form">
+                  <div class="button-column">
+                    <button id="downloadPortalBackup" type="button">Download Folder Backup ZIP</button>
+                  </div>
+                </div>
+                <p id="backupRestoreMessage" class="settings-note"></p>
+              </div>
+              <h3>Users</h3>
+              <div class="users-panel">
+                <div class="user-create-grid">
+                  <label>Create user from person
+                    <select id="userPersonSelect"></select>
+                  </label>
+                  <label>Username
+                    <input id="userUsername" type="text" autocomplete="off" />
+                  </label>
+                  <label>Password
+                    <input id="userPassword" type="text" value="ChangeMe123!" autocomplete="off" />
+                  </label>
+                  <label>Access
+                    <select id="userRole">
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </label>
+                  <div class="button-column">
+                    <button id="createUser" type="button">Create User</button>
+                  </div>
+                </div>
+                <div class="button-row">
+                  <button id="enableAllStaffUsers" type="button">Enable All Staff</button>
+                  <button id="disableAllStaffUsers" class="danger-row" type="button">Disable All Staff</button>
+                </div>
+                <div id="usersSummary" class="user-summary-grid"></div>
+                <p id="usersMessage" class="settings-note"></p>
+                <div class="user-list-header">
+                  <h4>User Accounts</h4>
+                  <label>Find users
+                    <input id="usersSearch" type="search" placeholder="Person, username, access..." />
+                  </label>
+                </div>
+                <div id="usersTable" class="table-wrap"></div>
+              </div>
+              <h3>Audit Trail</h3>
+              <div class="audit-panel">
+                <p>Local event history records account status changes, assignment removals, imports, org chart moves, user changes, and other high-value administrative actions.</p>
+                <div class="button-row">
+                  <button id="exportAuditCsv" type="button">Export Audit CSV</button>
+                  <button id="exportAuditPdf" type="button">Export Audit PDF</button>
+                </div>
+                <div id="auditTrailTable" class="table-wrap compact"></div>
+              </div>
+              <h3>Demo Data</h3>
+              <div class="demo-data-panel">
+                <p>Seed or clear browser-local demo records for testing. Seed preserves user accounts. Clear preserves the admin and custom accounts, and removes user accounts linked to People records.</p>
+                <div class="button-row">
+                  <button id="loadDemoData" type="button">Seed Demo Data</button>
+                  <button id="clearDemoData" type="button">Clear Demo Data</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <aside id="detailPanel" class="detail-panel" aria-live="polite">
+        <div class="detail-header">
+          <div>
+            <p class="eyebrow">Detail</p>
+            <h3 id="detailTitle">Select a record</h3>
+          </div>
+          <button id="closeDetail" type="button">Close</button>
+        </div>
+        <div id="detailBody" class="detail-body">
+          <p>Click a table row button or org chart card to inspect relationships.</p>
+        </div>
+      </aside>
+
+      <dialog id="recordDialog">
+        <form id="recordForm" method="dialog">
+          <div class="dialog-header">
+            <div>
+              <p class="eyebrow" id="recordDialogMode">Record</p>
+              <h3 id="recordDialogTitle">Edit Record</h3>
+            </div>
+            <button type="submit" value="cancel" formnovalidate>Close</button>
+          </div>
+          <div id="recordFields" class="dialog-fields"></div>
+          <menu class="dialog-actions">
+            <button id="deleteRecord" type="button">Delete</button>
+            <span></span>
+            <button type="submit" value="cancel" formnovalidate>Cancel</button>
+            <button id="saveRecord" type="submit" value="save">Save</button>
+          </menu>
+        </form>
+      </dialog>
+
+      <dialog id="userDialog">
+        <form id="userForm" method="dialog">
+          <div class="dialog-header">
+            <div>
+              <p class="eyebrow">User Account</p>
+              <h3 id="userDialogTitle">Edit User</h3>
+            </div>
+            <button type="submit" value="cancel" formnovalidate>Close</button>
+          </div>
+          <div class="dialog-fields user-dialog-fields">
+            <label class="record-field">Linked person
+              <select id="editUserPerson"></select>
+            </label>
+            <label class="record-field">Username
+              <input id="editUserUsername" type="text" autocomplete="off" required />
+            </label>
+            <label class="record-field">Access
+              <select id="editUserRole">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </label>
+            <label class="record-field">Status
+              <select id="editUserStatus">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </label>
+            <label class="record-field record-field-wide">New password
+              <input id="editUserPassword" type="text" autocomplete="off" placeholder="Leave blank to keep current password" />
+            </label>
+            <p id="editUserMessage" class="settings-note record-field-wide"></p>
+          </div>
+          <menu class="dialog-actions">
+            <span></span>
+            <button type="submit" value="cancel" formnovalidate>Cancel</button>
+            <button id="saveUser" type="submit" value="save">Save User</button>
+          </menu>
+        </form>
+      </dialog>
+
+      <dialog id="confirmDialog">
+        <form id="confirmForm" method="dialog">
+          <div class="dialog-header">
+            <div>
+              <p class="eyebrow">Confirm</p>
+              <h3 id="confirmTitle">Confirm Action</h3>
+            </div>
+            <button type="submit" value="cancel" formnovalidate>Close</button>
+          </div>
+          <div class="confirm-body">
+            <p id="confirmMessage"></p>
+          </div>
+          <menu class="dialog-actions">
+            <span></span>
+            <button type="submit" value="cancel" formnovalidate>Cancel</button>
+            <button id="confirmAction" type="submit" value="confirm">Confirm</button>
+          </menu>
+        </form>
+      </dialog>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
