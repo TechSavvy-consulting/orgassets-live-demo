@@ -21,6 +21,7 @@ const defaultDashboardTables = {
 const defaultPortalSettings = {
   defaultScope: "department",
   defaultDensity: "compact",
+  showOrgSnapshot: true,
   showCostKpis: true,
   showSystemsOnCards: true,
   showFocusedTables: true,
@@ -117,8 +118,8 @@ const el = {
   closeDetail: document.querySelector("#closeDetail"),
   settingDefaultScope: document.querySelector("#settingDefaultScope"),
   settingDefaultDensity: document.querySelector("#settingDefaultDensity"),
+  settingShowOrgSnapshot: document.querySelector("#settingShowOrgSnapshot"),
   settingShowCostKpis: document.querySelector("#settingShowCostKpis"),
-  settingShowSystemsOnCards: document.querySelector("#settingShowSystemsOnCards"),
   settingShowReportDeck: document.querySelector("#settingShowReportDeck"),
   settingDefaultPageSize: document.querySelector("#settingDefaultPageSize"),
   settingDefaultPersonStatus: document.querySelector("#settingDefaultPersonStatus"),
@@ -4329,8 +4330,8 @@ function imageSourceToJpegPayload(src, maxWidth = 640, maxHeight = 260) {
 function renderSettings() {
   el.settingDefaultScope.value = state.settings.defaultScope;
   el.settingDefaultDensity.value = state.settings.defaultDensity;
+  el.settingShowOrgSnapshot.checked = state.settings.showOrgSnapshot !== false;
   el.settingShowCostKpis.checked = state.settings.showCostKpis;
-  el.settingShowSystemsOnCards.checked = state.settings.showSystemsOnCards;
   const dashboardTables = dashboardTableSettings();
   el.settingDashboardTables.forEach((input) => {
     input.checked = dashboardTables[input.dataset.dashboardTableSetting] !== false;
@@ -4364,8 +4365,8 @@ function savePortalSettingsFromForm() {
     ...state.settings,
     defaultScope: el.settingDefaultScope.value,
     defaultDensity: el.settingDefaultDensity.value,
+    showOrgSnapshot: el.settingShowOrgSnapshot.checked,
     showCostKpis: el.settingShowCostKpis.checked,
-    showSystemsOnCards: el.settingShowSystemsOnCards.checked,
     showFocusedTables: Object.values(dashboardTableSettingsFromForm()).some(Boolean),
     dashboardTables: dashboardTableSettingsFromForm(),
     showReportDeck: el.settingShowReportDeck.checked,
@@ -4952,6 +4953,7 @@ function applyPortalLayoutDefaults() {
 }
 
 function applyDashboardLayout() {
+  el.metricGrid.hidden = state.settings.showOrgSnapshot === false;
   el.reportDeckPanel.hidden = !state.settings.showReportDeck;
   const dashboardTables = dashboardTableSettings();
   let visibleTableCount = 0;
