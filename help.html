@@ -340,7 +340,7 @@
         </p>
         <h3>Recommended daily workflow</h3>
         <ol>
-          <li>Start at Dashboard to review the command queue, focused risk tables, and report deck.</li>
+          <li>Start at Dashboard to review the command queue, dashboard table panels, and report deck.</li>
           <li>Use View Rules to jump into Staff, Contractors, Renewals, or Actions with the right table filters already applied.</li>
           <li>Open the detail panel from any View button, report value, org chart card, system name, person name, vendor, or owner link.</li>
           <li>Use the section tables for maintenance work, then run Reports or Export PDF when management needs a clean review packet.</li>
@@ -360,9 +360,9 @@
         <h2>4. Dashboard</h2>
         <p>
           The Dashboard is the command view for daily review. It summarizes people, systems/assets, monthly cost,
-          renewals, cleanup work, admin access, focused dashboard tables, org snapshot cards, and the report deck.
+          renewals, cleanup work, admin access, the command queue, dashboard table panels, and the report deck.
         </p>
-        <img src="./assets/help/01-dashboard.png" alt="OrgAssets dashboard with metrics, command queue, focused tables, org snapshot, and report deck" />
+        <img src="./assets/help/01-dashboard.png" alt="OrgAssets dashboard with metrics, command queue, dashboard table panels, and report deck" />
         <h3>What to review first</h3>
         <ul>
           <li><b>Metric cards are shortcuts.</b> Click People, Systems, Cost, Renewals, Cleanup, or Admin Access to open the related module or report.</li>
@@ -447,10 +447,10 @@
           depends on.
         </p>
         <img src="./assets/help/03-systems-assets.png" alt="Systems and assets register with vendors, owners, costs, renewals, seats, and status" />
-        <img src="./assets/help/13-system-asset-editor-fields.png" alt="System and asset editor showing asset, ownership, billing, assigned people, URL, and notes fields" />
+        <img src="./assets/help/13-system-asset-editor-fields.png" alt="System and asset editor showing editable picker suggestions for name, type, and category fields" />
         <h3>System / asset fields</h3>
         <ul>
-          <li><b>Add systems with existing values.</b> Name, type, and category fields support existing-value suggestions to reduce duplicate variations.</li>
+          <li><b>Add systems with existing values.</b> Name, type, and category fields support editable picker suggestions to reduce duplicate variations. Type is the kind of asset, such as Software or Website; Category is the business grouping, such as Finance, Marketing, Backup, or Hosting.</li>
           <li><b>Ownership</b> connects the system to a vendor, owner, and department. Setting an owner also keeps the Owner assignment aligned.</li>
           <li><b>Billing</b> tracks billing frequency, cost amount, renewal date, cancellation deadline, auto renew, seats purchased, seats assigned, and last reviewed date.</li>
           <li><b>Assigned People</b> lets admins assign users directly from the system window. New assignments use the selected assignment type and access level.</li>
@@ -619,16 +619,16 @@
       <section id="settings" class="help-card">
         <h2>18. Settings</h2>
         <p>
-          Settings control report branding, dashboard layout, list limits, user accounts, audit trail exports, backups,
-          demo data, and the boundaries for what should and should not be stored in OrgAssets.
+          Settings control report branding, layout defaults, list limits, user accounts, backups, demo data, and the
+          boundaries for what should and should not be stored in OrgAssets.
         </p>
-        <img src="./assets/help/10-settings.png" alt="Settings page with report branding, dashboard layout, Show Org Snapshot, and data field options" />
-        <img src="./assets/help/18-settings-report-branding-layout.png" alt="Settings page scrolled to dashboard layout, data field options, and folder backup controls" />
-        <img src="./assets/help/26-audit-trail.png" alt="Audit Trail settings panel with CSV and PDF export buttons, search controls, and local event history" />
+        <img src="./assets/help/10-settings.png" alt="Settings page with report branding, dashboard layout, and data field options" />
+        <img src="./assets/help/18-settings-report-branding-layout.png" alt="Settings page scrolled to dashboard layout with individual dashboard table checkboxes, data field options, and folder backup controls" />
+        <img src="./assets/help/26-audit-trail.png" alt="Audit Trail settings panel with CSV and PDF export buttons and local event history" />
         <h3>Settings workflow</h3>
         <ul>
           <li><b>Report Branding</b> uploads a logo and customizes the PDF report header. The preview shows how reports will look.</li>
-          <li><b>Dashboard Layout</b> sets default org chart scope, chart density, cost KPI visibility, Org Snapshot visibility, focused dashboard tables, and report deck visibility.</li>
+          <li><b>Dashboard Layout</b> sets default org chart scope, chart density, cost KPI visibility, individual dashboard table visibility, report deck visibility, and systems touched on org chart cards. Visible dashboard tables automatically move up to fill open dashboard positions.</li>
           <li><b>Data Field Options</b> sets default row limit, person status, employment type, system status, assignment access, and advanced field visibility.</li>
           <li><b>Audit Trail</b> exports local event history as CSV or PDF, including hash-chain markers for integrity review.</li>
           <li><b>Portal Boundaries</b> define the purpose of the portal and remind users not to store credentials.</li>
@@ -638,12 +638,11 @@
       <section id="users-backup" class="help-card">
         <h2>19. Users, Demo Data, and Folder Backup</h2>
         <p>
-          Admin users manage accounts, demo data resets, and disaster-recovery exports from Settings. Standard users
-          can review the portal but are limited away from Settings, Imports, Offboarding, backups, demo data resets,
-          and business-data editing.
+          Admin users manage accounts and disaster-recovery exports from Settings. Standard users can review the portal
+          but are limited away from Settings, Imports, Offboarding, backups, demo data resets, and business-data editing.
         </p>
         <img src="./assets/help/11-users-backup.png" alt="Settings page showing user account management, Enable All Staff, Disable All Staff, summary cards, and account actions" />
-        <img src="./assets/help/19-settings-users-backup-demo.png" alt="Clear Demo Data confirmation explaining that admin and custom accounts are preserved while People-linked user accounts are removed" />
+        <img src="./assets/help/19-settings-users-backup-demo.png" alt="Clear Demo Data confirmation explaining that portal records are cleared while user accounts are preserved" />
         <h3>Admin workflow</h3>
         <ul>
           <li><b>Create users from people.</b> Select an existing person and create a portal account.</li>
@@ -652,7 +651,7 @@
           <li><b>Admin role</b> has access to all sections, add/edit/delete controls, Imports, Offboarding, Users, Audit Trail exports, Folder Backup, demo data reset, report branding, and portal defaults.</li>
           <li><b>User role</b> can sign in, search, review dashboards, people, departments, roles, vendors, systems/assets, assignments, org chart, action center, reports, detail panels, and available section exports. Users cannot change business data or access admin maintenance areas.</li>
           <li><b>Folder Backup</b> downloads a disaster-recovery ZIP of the working portal folder plus a current browser-data snapshot.</li>
-          <li><b>Seed Demo Data and Clear Demo Data</b> are admin-only actions at the bottom of Settings. Seed preserves user accounts. Clear preserves the admin and custom accounts, and removes user accounts linked to People records.</li>
+          <li><b>Seed Demo Data and Clear Demo Data</b> are admin-only actions at the bottom of Settings and preserve existing user accounts.</li>
         </ul>
       </section>
 

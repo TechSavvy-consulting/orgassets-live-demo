@@ -155,15 +155,50 @@
               </div>
               <div id="actionPreview" class="action-list"></div>
             </section>
-            <section class="panel org-snapshot-panel">
+            <section class="panel dashboard-table-panel" data-dashboard-table-panel="upcomingRenewals">
               <div class="panel-header">
                 <div>
-                  <p class="eyebrow">Org Snapshot</p>
-                  <h3>People structure</h3>
+                  <p class="eyebrow">Renewals</p>
+                  <h3>Upcoming Renewals</h3>
                 </div>
-                <button type="button" data-view-jump="topology">Open Org Chart</button>
               </div>
-              <div id="orgSnapshot" class="snapshot-grid"></div>
+              <div id="upcomingRenewals" class="table-wrap compact"></div>
+            </section>
+            <section class="panel dashboard-table-panel" data-dashboard-table-panel="contractorAccess">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Contractors</p>
+                  <h3>Access Past End Date</h3>
+                </div>
+              </div>
+              <div id="contractorAccessTable" class="table-wrap compact"></div>
+            </section>
+            <section class="panel dashboard-table-panel" data-dashboard-table-panel="formerStaffAccess">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Cleanup</p>
+                  <h3>Accounts Assigned to Former Staff</h3>
+                </div>
+              </div>
+              <div id="formerStaffTable" class="table-wrap compact"></div>
+            </section>
+            <section class="panel dashboard-table-panel" data-dashboard-table-panel="highCostSystems">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Spend</p>
+                  <h3>Highest Monthly Cost Systems</h3>
+                </div>
+              </div>
+              <div id="highCostTable" class="table-wrap compact"></div>
+            </section>
+            <section class="panel dashboard-table-panel" data-dashboard-table-panel="noOwnerSystems">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Ownership</p>
+                  <h3>Systems With No Owner</h3>
+                </div>
+              </div>
+              <div id="noOwnerTable" class="table-wrap compact"></div>
             </section>
             <section class="panel report-deck-panel">
               <div class="panel-header">
@@ -174,54 +209,6 @@
                 <button type="button" data-view-jump="reports">Open Reports</button>
               </div>
               <div id="reportDeck" class="report-deck"></div>
-            </section>
-          </div>
-
-          <div class="dashboard-grid focused-dashboard-grid">
-            <section class="panel">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Renewals</p>
-                  <h3>Upcoming Renewals</h3>
-                </div>
-              </div>
-              <div id="upcomingRenewals" class="table-wrap compact"></div>
-            </section>
-            <section class="panel">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Contractors</p>
-                  <h3>Access Past End Date</h3>
-                </div>
-              </div>
-              <div id="contractorAccessTable" class="table-wrap compact"></div>
-            </section>
-            <section class="panel">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Cleanup</p>
-                  <h3>Accounts Assigned to Former Staff</h3>
-                </div>
-              </div>
-              <div id="formerStaffTable" class="table-wrap compact"></div>
-            </section>
-            <section class="panel">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Spend</p>
-                  <h3>Highest Monthly Cost Systems</h3>
-                </div>
-              </div>
-              <div id="highCostTable" class="table-wrap compact"></div>
-            </section>
-            <section class="panel">
-              <div class="panel-header">
-                <div>
-                  <p class="eyebrow">Ownership</p>
-                  <h3>Systems With No Owner</h3>
-                </div>
-              </div>
-              <div id="noOwnerTable" class="table-wrap compact"></div>
             </section>
           </div>
         </section>
@@ -514,9 +501,16 @@
                   </select>
                 </label>
                 <label class="toggle-row"><input id="settingShowCostKpis" type="checkbox" /> Show cost KPI cards</label>
-                <label class="toggle-row"><input id="settingShowOrgSnapshot" type="checkbox" /> Show Org Snapshot</label>
-                <label class="toggle-row"><input id="settingShowFocusedTables" type="checkbox" /> Show focused dashboard tables</label>
+                <label class="toggle-row"><input id="settingShowSystemsOnCards" type="checkbox" /> Show systems touched on org chart cards</label>
                 <label class="toggle-row"><input id="settingShowReportDeck" type="checkbox" /> Show report deck</label>
+                <fieldset class="checkbox-fieldset dashboard-table-settings">
+                  <legend>Dashboard tables</legend>
+                  <label class="record-checkbox"><input type="checkbox" data-dashboard-table-setting="upcomingRenewals" /> Upcoming renewals</label>
+                  <label class="record-checkbox"><input type="checkbox" data-dashboard-table-setting="contractorAccess" /> Contractor access past end date</label>
+                  <label class="record-checkbox"><input type="checkbox" data-dashboard-table-setting="formerStaffAccess" /> Former staff access</label>
+                  <label class="record-checkbox"><input type="checkbox" data-dashboard-table-setting="highCostSystems" /> Highest monthly cost systems</label>
+                  <label class="record-checkbox"><input type="checkbox" data-dashboard-table-setting="noOwnerSystems" /> Systems with no owner</label>
+                </fieldset>
               </div>
               <h3>Data Field Options</h3>
               <div class="settings-form">
@@ -631,7 +625,7 @@
               </div>
               <h3>Demo Data</h3>
               <div class="demo-data-panel">
-                <p>Seed or clear browser-local demo records for testing. Seed preserves user accounts. Clear preserves the admin and custom accounts, and removes user accounts linked to People records.</p>
+                <p>Seed or clear browser-local demo records for testing. User accounts are preserved.</p>
                 <div class="button-row">
                   <button id="loadDemoData" type="button">Seed Demo Data</button>
                   <button id="clearDemoData" type="button">Clear Demo Data</button>

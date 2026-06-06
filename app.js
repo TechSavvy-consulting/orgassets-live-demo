@@ -1,8 +1,8 @@
 const storageKey = "orgassets-portal-data-v1";
 const sessionUserKey = "orgassets-current-user-id";
 const legacyStorageKeys = ["orgaccess-portal-data-v1", "asset-topology-demo-v2"];
-const defaultAdminPassword = "ChangeMe123!";
 const staticDemoHost = /\.github\.io$/i.test(location.hostname);
+const defaultAdminPassword = "ChangeMe123!";
 const defaultCompanyName = "OrgAssets";
 const defaultReportHeader = "OrgAssets\nDigital asset ownership and access report";
 const legacyDemoCompanyNames = new Set(["Demo Company", "Pinpoint Personnel Demo Business", "TechSavvy Demo Business"]);
@@ -11,13 +11,20 @@ const adminLevels = new Set(["Billing Admin", "Admin", "Owner"]);
 const inactiveStatuses = new Set(["Inactive", "Terminated", "Archived"]);
 const contractorTypes = new Set(["Contractor", "Subcontractor"]);
 const adminOnlyViews = new Set(["offboarding", "settings", "imports"]);
+const defaultDashboardTables = {
+  upcomingRenewals: true,
+  contractorAccess: true,
+  formerStaffAccess: true,
+  highCostSystems: true,
+  noOwnerSystems: true
+};
 const defaultPortalSettings = {
   defaultScope: "department",
   defaultDensity: "compact",
   showCostKpis: true,
   showSystemsOnCards: true,
-  showOrgSnapshot: true,
   showFocusedTables: true,
+  dashboardTables: { ...defaultDashboardTables },
   showReportDeck: true,
   defaultPageSize: "25",
   defaultPersonStatus: "Active",
@@ -52,9 +59,8 @@ const el = {
   noOwnerTable: document.querySelector("#noOwnerTable"),
   highCostTable: document.querySelector("#highCostTable"),
   reportDeckPanel: document.querySelector(".report-deck-panel"),
-  focusedDashboardGrid: document.querySelector(".focused-dashboard-grid"),
-  orgSnapshotPanel: document.querySelector(".org-snapshot-panel"),
-  orgSnapshot: document.querySelector("#orgSnapshot"),
+  dashboardTablePanels: document.querySelectorAll("[data-dashboard-table-panel]"),
+  settingDashboardTables: document.querySelectorAll("[data-dashboard-table-setting]"),
   reportDeck: document.querySelector("#reportDeck"),
   actionPreview: document.querySelector("#actionPreview"),
   peopleTable: document.querySelector("#peopleTable"),
@@ -112,8 +118,7 @@ const el = {
   settingDefaultScope: document.querySelector("#settingDefaultScope"),
   settingDefaultDensity: document.querySelector("#settingDefaultDensity"),
   settingShowCostKpis: document.querySelector("#settingShowCostKpis"),
-  settingShowOrgSnapshot: document.querySelector("#settingShowOrgSnapshot"),
-  settingShowFocusedTables: document.querySelector("#settingShowFocusedTables"),
+  settingShowSystemsOnCards: document.querySelector("#settingShowSystemsOnCards"),
   settingShowReportDeck: document.querySelector("#settingShowReportDeck"),
   settingDefaultPageSize: document.querySelector("#settingDefaultPageSize"),
   settingDefaultPersonStatus: document.querySelector("#settingDefaultPersonStatus"),
@@ -456,7 +461,15 @@ function normalizeState(data) {
   });
   normalized.auditEvents = normalizeAuditEvents(normalized.auditEvents);
   normalizeUsers(normalized);
-  normalized.settings = { ...defaultPortalSettings, ...(normalized.settings ?? {}) };
+  const rawSettings = normalized.settings && typeof normalized.settings === "object" ? normalized.settings : {};
+  normalized.settings = { ...defaultPortalSettings, ...rawSettings };
+  normalized.settings.dashboardTables = { ...defaultDashboardTables, ...(rawSettings.dashboardTables ?? {}) };
+  if (!rawSettings.dashboardTables && rawSettings.showFocusedTables === false) {
+    normalized.settings.dashboardTables.contractorAccess = false;
+    normalized.settings.dashboardTables.formerStaffAccess = false;
+    normalized.settings.dashboardTables.highCostSystems = false;
+    normalized.settings.dashboardTables.noOwnerSystems = false;
+  }
   normalized.company = normalizeCompanyBranding(normalized.company);
   normalized.people.forEach((personRecord) => {
     personRecord.displayName = `${personRecord.firstName ?? ""} ${personRecord.lastName ?? ""}`.trim() || personRecord.displayName || "Unnamed person";
@@ -1656,27 +1669,12 @@ function renderDashboardTables() {
     _departmentId: system.departmentId
   })), { controls: false });
 
-  renderOrgSnapshot();
   renderReportDeck();
 
   const actions = getActionItems().slice(0, 6);
   el.actionPreview.innerHTML = actions.length
     ? actions.map((item) => `<article class="action-item ${item.severity}"><strong>${commandLink(item.actionType, "actions")}: ${recordLink("system", item.systemAssetId, systemName(item.systemAssetId))}</strong><p>${commandLink(item.reason, "actions")}. ${commandLink(item.nextStep, "actions")}.</p></article>`).join("")
     : `<div class="empty-state">No action items generated.</div>`;
-}
-
-function renderOrgSnapshot() {
-  const activeEmployees = state.people.filter((personRecord) => personRecord.status === "Active" && personRecord.employmentType !== "Vendor Contact" && !contractorTypes.has(personRecord.employmentType)).length;
-  const activeContractors = state.people.filter((personRecord) => personRecord.status === "Active" && contractorTypes.has(personRecord.employmentType)).length;
-  const departmentCount = state.departments.length;
-  const managerCount = new Set(state.people.map((personRecord) => personRecord.managerPersonId).filter(Boolean)).size;
-  const items = [
-    ["Employees", activeEmployees],
-    ["Contractors", activeContractors],
-    ["Departments", departmentCount],
-    ["Managers", managerCount]
-  ];
-  el.orgSnapshot.innerHTML = items.map(([label, value]) => `<button type="button" class="snapshot-item" data-dashboard-target="${label === "Departments" ? "departments" : "people"}"><strong>${value}</strong><span>${label}</span></button>`).join("");
 }
 
 function renderReportDeck() {
@@ -3724,22 +3722,6 @@ function preserveUsersForDataReset(nextState) {
   return normalizeState(nextState);
 }
 
-function preserveAdminAndCustomUsersForDataClear(nextState) {
-  const admin = defaultAdminUser();
-  const users = (state.users?.length ? state.users : [admin])
-    .filter((user) => {
-      const isDefaultAdmin = String(user.username || "").trim().toLowerCase() === "admin";
-      const isCustomAccount = !user.personId;
-      return isDefaultAdmin || isCustomAccount;
-    })
-    .map((user) => ({ ...user, personId: "" }));
-  if (!users.some((user) => String(user.username || "").trim().toLowerCase() === "admin")) {
-    users.unshift(admin);
-  }
-  nextState.users = users;
-  return normalizeState(nextState);
-}
-
 async function exportCurrentReportPdf() {
   const tableState = currentReportTableState();
   const rows = tableState.sortedRows;
@@ -4348,8 +4330,11 @@ function renderSettings() {
   el.settingDefaultScope.value = state.settings.defaultScope;
   el.settingDefaultDensity.value = state.settings.defaultDensity;
   el.settingShowCostKpis.checked = state.settings.showCostKpis;
-  el.settingShowOrgSnapshot.checked = state.settings.showOrgSnapshot;
-  el.settingShowFocusedTables.checked = state.settings.showFocusedTables;
+  el.settingShowSystemsOnCards.checked = state.settings.showSystemsOnCards;
+  const dashboardTables = dashboardTableSettings();
+  el.settingDashboardTables.forEach((input) => {
+    input.checked = dashboardTables[input.dataset.dashboardTableSetting] !== false;
+  });
   el.settingShowReportDeck.checked = state.settings.showReportDeck;
   el.settingDefaultPageSize.value = state.settings.defaultPageSize;
   el.settingDefaultPersonStatus.value = state.settings.defaultPersonStatus;
@@ -4380,8 +4365,9 @@ function savePortalSettingsFromForm() {
     defaultScope: el.settingDefaultScope.value,
     defaultDensity: el.settingDefaultDensity.value,
     showCostKpis: el.settingShowCostKpis.checked,
-    showOrgSnapshot: el.settingShowOrgSnapshot.checked,
-    showFocusedTables: el.settingShowFocusedTables.checked,
+    showSystemsOnCards: el.settingShowSystemsOnCards.checked,
+    showFocusedTables: Object.values(dashboardTableSettingsFromForm()).some(Boolean),
+    dashboardTables: dashboardTableSettingsFromForm(),
     showReportDeck: el.settingShowReportDeck.checked,
     defaultPageSize: el.settingDefaultPageSize.value,
     defaultPersonStatus: el.settingDefaultPersonStatus.value,
@@ -4402,6 +4388,18 @@ function savePortalSettingsFromForm() {
   });
   saveState();
   renderAll();
+}
+
+function dashboardTableSettings() {
+  return { ...defaultDashboardTables, ...(state.settings.dashboardTables ?? {}) };
+}
+
+function dashboardTableSettingsFromForm() {
+  const settings = { ...defaultDashboardTables };
+  el.settingDashboardTables.forEach((input) => {
+    settings[input.dataset.dashboardTableSetting] = input.checked;
+  });
+  return settings;
 }
 
 function resetPortalSettings() {
@@ -4954,9 +4952,15 @@ function applyPortalLayoutDefaults() {
 }
 
 function applyDashboardLayout() {
-  el.orgSnapshotPanel.hidden = !state.settings.showOrgSnapshot;
   el.reportDeckPanel.hidden = !state.settings.showReportDeck;
-  el.focusedDashboardGrid.hidden = !state.settings.showFocusedTables;
+  const dashboardTables = dashboardTableSettings();
+  let visibleTableCount = 0;
+  el.dashboardTablePanels.forEach((panel) => {
+    const visible = dashboardTables[panel.dataset.dashboardTablePanel] !== false;
+    panel.hidden = !visible;
+    if (visible) visibleTableCount += 1;
+  });
+  document.querySelector(".dashboard-command-grid")?.classList.toggle("dashboard-tables-empty", visibleTableCount === 0);
 }
 
 function renderViewRuleStats() {
@@ -5125,8 +5129,8 @@ function getRecordConfig(type, id = "") {
       collection: "systemAssets",
       fields: [
         field("name", "System / Asset Name", "text", { required: true, suggestions: activeSystemTextOptions("name", currentSystem?.name) }),
-        field("type", "Type", "text", { required: true, suggestions: activeSystemTextOptions("type", currentSystem?.type) }),
-        field("category", "Category", "text", { suggestions: activeSystemTextOptions("category", currentSystem?.category) }),
+        field("type", "Type", "text", { required: true, suggestions: activeSystemTextOptions("type", currentSystem?.type), helpText: "What kind of asset this is, such as Software, Subscription, Website, Domain, or Cloud Service." }),
+        field("category", "Category", "text", { suggestions: activeSystemTextOptions("category", currentSystem?.category), helpText: "Business grouping for reporting, such as Finance, Marketing, Backup, Hosting, or Productivity." }),
         field("status", "Status", "select", { options: systemStatusOptions, defaultValue: state.settings.defaultSystemStatus }),
         field("vendorId", "Vendor", "select", { options: vendorOptions(), emptyAsNull: true }),
         field("ownerPersonId", "Owner", "select", { options: personOptions("No owner"), emptyAsNull: true }),
@@ -5358,12 +5362,22 @@ function renderRecordField(fieldConfig, record) {
   const min = fieldConfig.min !== undefined ? `min="${escapeHtml(fieldConfig.min)}"` : "";
   const step = fieldConfig.step !== undefined ? `step="${escapeHtml(fieldConfig.step)}"` : "";
   const suggestions = fieldConfig.suggestions ?? [];
-  const listId = suggestions.length ? `${id}-suggestions` : "";
-  const list = listId ? `list="${escapeHtml(listId)}"` : "";
-  const datalist = listId
-    ? `<datalist id="${escapeHtml(listId)}">${suggestions.map((suggestion) => `<option value="${escapeHtml(suggestion)}"></option>`).join("")}</datalist>`
-    : "";
-  return `<label class="record-field">${escapeHtml(fieldConfig.label)}<input ${common} type="${escapeHtml(fieldConfig.type)}" value="${escapeHtml(value)}" ${min} ${step} ${list} />${datalist}</label>`;
+  const helpText = fieldConfig.helpText ? `<small class="field-help">${escapeHtml(fieldConfig.helpText)}</small>` : "";
+  if (suggestions.length) {
+    return `
+      <label class="record-field record-combo-field">${escapeHtml(fieldConfig.label)}
+        ${helpText}
+        <span class="combo-input-wrap">
+          <input ${common} type="${escapeHtml(fieldConfig.type)}" value="${escapeHtml(value)}" ${min} ${step} data-combo-input />
+          <button class="combo-trigger" type="button" data-combo-trigger aria-label="Show ${escapeHtml(fieldConfig.label)} options">v</button>
+        </span>
+        <span class="combo-menu" data-combo-menu hidden>
+          ${suggestions.map((suggestion) => `<button type="button" data-combo-value="${escapeHtml(suggestion)}">${escapeHtml(suggestion)}</button>`).join("")}
+        </span>
+      </label>
+    `;
+  }
+  return `<label class="record-field">${escapeHtml(fieldConfig.label)}${helpText}<input ${common} type="${escapeHtml(fieldConfig.type)}" value="${escapeHtml(value)}" ${min} ${step} /></label>`;
 }
 
 function closeRecordDialog() {
@@ -5373,6 +5387,43 @@ function closeRecordDialog() {
   } else {
     el.recordDialog.removeAttribute("open");
   }
+}
+
+function closeComboMenus() {
+  document.querySelectorAll("[data-combo-menu]").forEach((menu) => {
+    menu.hidden = true;
+  });
+}
+
+function closeOtherComboMenus(currentField) {
+  document.querySelectorAll("[data-combo-menu]").forEach((menu) => {
+    if (currentField && currentField.contains(menu)) return;
+    menu.hidden = true;
+  });
+}
+
+function toggleComboMenu(field, open) {
+  if (!field) return;
+  const menu = field.querySelector("[data-combo-menu]");
+  if (!menu) return;
+  closeOtherComboMenus(field);
+  filterComboMenu(field, { showAll: true });
+  menu.hidden = !open;
+}
+
+function filterComboMenu(field, { showAll = false } = {}) {
+  if (!field) return;
+  const input = field.querySelector("[data-combo-input]");
+  const menu = field.querySelector("[data-combo-menu]");
+  if (!input || !menu) return;
+  const query = showAll ? "" : input.value.trim().toLowerCase();
+  let visibleCount = 0;
+  menu.querySelectorAll("[data-combo-value]").forEach((option) => {
+    const visible = !query || option.dataset.comboValue.toLowerCase().includes(query);
+    option.hidden = !visible;
+    if (visible) visibleCount += 1;
+  });
+  menu.hidden = visibleCount === 0;
 }
 
 function saveRecordFromDialog() {
@@ -5909,6 +5960,30 @@ function renderAll() {
 }
 
 document.addEventListener("click", (event) => {
+  const comboTrigger = event.target.closest("[data-combo-trigger]");
+  if (comboTrigger) {
+    toggleComboMenu(comboTrigger.closest(".record-combo-field"), true);
+    comboTrigger.closest(".record-combo-field")?.querySelector("[data-combo-input]")?.focus();
+    return;
+  }
+
+  const comboValue = event.target.closest("[data-combo-value]");
+  if (comboValue) {
+    const field = comboValue.closest(".record-combo-field");
+    const input = field?.querySelector("[data-combo-input]");
+    if (input) {
+      input.value = comboValue.dataset.comboValue || "";
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.focus();
+    }
+    toggleComboMenu(field, false);
+    return;
+  }
+
+  if (!event.target.closest(".record-combo-field")) {
+    closeComboMenus();
+  }
+
   const templateTarget = event.target.closest("[data-template-type]");
   if (templateTarget) {
     if (!isAdminUser()) return;
@@ -6018,6 +6093,13 @@ document.addEventListener("click", (event) => {
 });
 
 document.addEventListener("input", (event) => {
+  if (event.target.matches("[data-combo-input]")) {
+    const field = event.target.closest(".record-combo-field");
+    closeOtherComboMenus(field);
+    filterComboMenu(field);
+    return;
+  }
+
   const tableId = event.target.dataset.tableSearch;
   if (!tableId) return;
   tablePrefs[tableId] = tablePrefs[tableId] ?? { search: "", sortKey: "", sortDir: "asc", limit: state.settings.defaultPageSize, filters: {} };
@@ -6240,10 +6322,10 @@ el.clearDemoData.addEventListener("click", () => {
   if (!isAdminUser()) return;
   openConfirmDialog({
     title: "Clear Demo Data",
-    message: "Clear portal records from this browser data set? The admin account and custom accounts are preserved; user accounts linked to People records are removed.",
+    message: "Clear portal records from this browser data set? User accounts are preserved.",
     confirmLabel: "Clear Demo Data",
     onConfirm: () => {
-      state = preserveAdminAndCustomUsersForDataClear(emptyState());
+      state = preserveUsersForDataReset(emptyState());
       clearTreeHistory();
       saveState();
       renderAll();
